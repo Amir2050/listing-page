@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DriveNest - Listings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: #ffffff;
+      padding: 2rem;
+    }
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2d2d44;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚗 DriveNest Listings</h1>
+  <div id="listings"></div>
+
+  <script>
+    fetch("https://api.adalo.com/v0/apps/bb88700b-59ff-4529-8307-6348927b2570/collections/t_1p28u2k14dp9wgemmuvhw90ya", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 9f392ekfse0we7yw5vwywvxh7"
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("listings");
+      data.records.forEach(record => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `<h2>${record.make || "Unknown Make"} ${record.model || ""}</h2><p>Year: ${record.year || "N/A"}</p>`;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      console.error("Error fetching listings:", err);
+    });
+  </script>
+
+</body>
+</html>
